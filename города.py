@@ -1,3 +1,4 @@
+from auto_py_to_exe.config import language_hint
 from opencage.geocoder import OpenCageGeocode
 
 
@@ -5,8 +6,7 @@ def get_coordinates(city, key):#создаем функцию получения
     # передаем город(название) и ключ
     try:#попробовать
         geocoder = OpenCageGeocode(key)
-        query = city
-        results = geocoder.geocode(query)
+        results = geocoder.geocode(city, language='ru')
         if results:#делаем проверку:если все хорошо, возвращает нам информацию
             return results[0]['geometry']['lat'], results[0]['geometry']['lng']#возвращаем долготу и широту
         else:#если же ничего нет
