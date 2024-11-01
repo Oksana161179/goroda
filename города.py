@@ -1,4 +1,4 @@
-
+from future.backports import count
 from opencage.geocoder import OpenCageGeocode
 from tkinter import *
 
@@ -12,7 +12,10 @@ def get_coordinates(city, key):#создаем функцию получения
             # и округляем ее до двух знаков после запятой
             lon = round(results[0]['geometry']['lng'], 2)#создаем переменную для долготы
             # и округляем ее до двух знаков после запятой
-            return f"Широта: {lat}, Долгота: {lon}"#возвращаем широту и долготу
+            country = results[0]['components']['country']#выводим результаты о стране, в котором находится город
+            region = results[0]['components']['state']#выводим результаты о регионе, в котором находится город
+            return f"Широта: {lat}, Долгота: {lon} Страна: {country} Регион: {region}"
+            #возвращаем широту, долготу, страну и регион
         else:#если же ничего нет
             return "Город не найден"#то возвращается сообщение об этом
     except Exception as e:#обрабатываем исключения
