@@ -1,5 +1,9 @@
-from auto_py_to_exe.config import language_hint
+from PyInstaller.lib.modulegraph.modulegraph import entry
+from Scripts.собачки_загружаем_на_метку_с_помощью_кнопки import button, label
 from opencage.geocoder import OpenCageGeocode
+from tkinter import *
+
+from выводим_список_папок_в_консоль import window
 
 
 def get_coordinates(city, key):#создаем функцию получения координат:
@@ -18,11 +22,27 @@ def get_coordinates(city, key):#создаем функцию получения
     except Exception as e:#обрабатываем исключения
         return f"Возникла ошибка: {e}"#возвращается сообщение об ошибке
 
+def show_coordinates():#создаем функцию, которая будет вызываться после нажатия на кнопку
+    city = entry.get()#получаем название города из поля ввода
+    coordinates = get_coordinates(city, key)#создаем переменную-coordinates, в которую положим вызов функции.
+    # а передаем в ней город и ключ
+    label.config(text=f"Координаты города {city}: {coordinates}")#конфигурируем кнопку
+
 key = 'fb6b2a8e60d74ae397a69757e0b1f27b'
-city = "Эквадор"
-coordinates = get_coordinates(city, key)#создаем переменную-coordinates, в которую положим вызов функции.
-# а передаем в ней город и ключ
-print(f"Координаты города {city}: {coordinates}")#выводим в консоль название города-{city}
-# и его координаты-{coordinates}
+
+window = Tk()#создаем окно
+window.title("Координаты городов")#задаем заголовок окну
+window.geometry("200x100")#задаем размер окну
+
+entry = Entry()#создаем поле ввода
+entry.pack()
+
+button = Button(text="Поиск координат", command=show_coordinates)#создаем кнопку
+button.pack()
+
+label = Label(text="Введите город и нажмите на кнопку")#создаем метку
+label.pack()
+
+window.mainloop()
 
 
